@@ -132,8 +132,6 @@
 
 		<!-- Make the page look good :) -->
 		<style>
-			.logo_holder {text-align:center;margin:50px 0 30px 0;}
-			.logo_holder img {width:400px;}
 			.err {border:1px solid #A80000;background-color:rgba(168,0,0,0.1);}
 			.err_txt {color:#A80000;}
 			* {box-sizing: border-box;}
@@ -146,7 +144,6 @@
 			h2 {line-height: 1em;margin-top:0;text-align: center;}
 			p {overflow:hidden;}
 			@media screen and (max-width:600px) {
-				.logo_holder img {width:90%;margin:0 5%;}
 				form, label, input {width:100%;}
 				form {margin:0;padding:4%;}
 			}
@@ -154,9 +151,6 @@
 	</head>
 
 	<body>
-		<div class="logo_holder">
-			<img src="https://techwhisperer.com.au/wp-content/themes/techwhisperer/img/TechWhispererLogo.png" alt="Tech Whisperer Logo">
-		</div>
 		<?php
 			// Check if the site has wordpress
 			$has_wp = (file_exists("wp-config.php")) ? true : false;
