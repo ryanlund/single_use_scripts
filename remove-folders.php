@@ -1,27 +1,29 @@
 <?php
-	error_reporting(0); // Set to -1 to show all
-	mysqli_report(MYSQLI_REPORT_STRICT);
-
-
 	// Get the action
 	$action = (isset($_POST["action"])) ? $_POST["action"] : false;
 	$remove_folder = (isset($_POST["remove_folder"])) ? $_POST["remove_folder"] : false; 
 
+	//remove foward slashes at the beginning of the folder path. 
+	//Doing this will prevent users typing in folders such as /etc/ but also prevents using full paths. 
+	//This does mean that the script MUST be used from a folder above the target folder.
+	$remove_folder = ltrim($remove_folder);
+
+	//Remove .. from target folder. This prevents the user from accessing folders above the current one, again protecting system folders.
+	$remove_folder = str_replace('..', '', $remove_folder);
+
 	// Set the fiished variable
 	$finished = false;
 
-	// Check connection
-	if($action == "install_starter_site") {
-
-		if(file_exists($remove_folder)) {
-			rrmdir($remove_folder);
-		}		
+	// Check action. Check folder is actually a folder, ignore otherwise.
+	if( $action === "install_starter_site" && is_dir($remove_folder) ) {
+		rrmdir($remove_folder);		
 	}
 
 	// FUNCTIONS
 	function rrmdir($src) {
 	    $dir = opendir($src);
-	    while(false !== ( $file = readdir($dir)) ) {
+
+	    while( false !== ( $file = readdir($dir) ) ) {
 	        if (( $file != '.' ) && ( $file != '..' )) {
 	            $full = $src . '/' . $file;
 	            if ( is_dir($full) ) {
@@ -32,6 +34,7 @@
 	            }
 	        }
 	    }
+
 	    closedir($dir);
 	    rmdir($src);
 	}
